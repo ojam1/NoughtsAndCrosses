@@ -1,7 +1,5 @@
-using Moq;
 using NUnit.Framework;
 using NSubstitute;
-using NoughtsAndCrosses;
 
 namespace NoughtsAndCrosses.Tests
 {

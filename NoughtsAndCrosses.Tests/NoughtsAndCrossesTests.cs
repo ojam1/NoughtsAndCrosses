@@ -11,16 +11,17 @@ namespace NoughtsAndCrosses.Tests
         }
 
         [Test]
-        public void Outputs_player_one_name()
+        public void Outputs_players_names()
         {
             var writer = Substitute.For<IWriter>();
-            writer.ReadLine().Returns("Matt");
+            writer.ReadLine().Returns("Matt Olly");
 
             new Game(writer).Start();
             
-            writer.Received(2).WriteLine(Arg.Any<string>());
-            writer.Received().WriteLine("Enter player 1 name:");
+            writer.Received(3).WriteLine(Arg.Any<string>());
+            writer.Received().WriteLine("Enter players names with a space between them");
             writer.Received().WriteLine("Hello Matt");
+            writer.Received().WriteLine("Hello Olly");
         }
     }
 }

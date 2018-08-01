@@ -24,7 +24,9 @@ namespace NoughtsAndCrosses
         {
             var other = new Writer(_writer);
             other.WriteWelcome();
-            other.WritePlayerName(other.ReadNextLine());
+            var players = other.ReadLine();
+            other.WritePlayerName(players.Split(" ")[0]);
+            other.WritePlayerName(players.Split(" ")[1]);
         }
     }
 
@@ -52,7 +54,7 @@ namespace NoughtsAndCrosses
 
         public void WriteWelcome()
         {
-            _writer.WriteLine("Enter player 1 name:");
+            _writer.WriteLine("Enter players names with a space between them");
         }
 
         public void WritePlayerName(string name)

@@ -60,7 +60,7 @@ namespace NoughtsAndCrosses
             _writer.WriteLine($"Hello {name}");
         }
 
-        public string ReadNextLine()
+        public string ReadLine()
         {
             return _writer.ReadLine();
         }

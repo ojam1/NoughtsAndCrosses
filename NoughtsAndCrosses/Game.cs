@@ -33,18 +33,18 @@
                 writer.WriteTurn(PlayerOne);
                 _grid.SetNoughtOrCross(writer.ReadLine(), PlayerOne);
                 if (_grid.WinCondition)
+                {
+                    WriteWinner(PlayerOne);
                     break;
+                }
                 writer.WriteTurn(PlayerTwo);
                 _grid.SetNoughtOrCross(writer.ReadLine(), PlayerTwo);
+                if (_grid.WinCondition)
+                {
+                    WriteWinner(PlayerTwo);
+                    break;
+                }
             }
-        }
-
-        private void Winner(string player)
-        {
-            if (_grid.WinCondition)
-                WriteWinner(player);
-
-            new Writer(_writer).WriteEmpty();
         }
 
         private void WriteWinner(string player)

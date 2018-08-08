@@ -9,14 +9,14 @@
             _writer = writer;
         }
 
-        public void Write(string line)
-        {
-            _writer.Write(line);
-        }
-
         public void WriteLine(string line)
         {
             _writer.WriteLine(line);
+        }
+
+        public void WriteEmpty()
+        {
+            _writer.Write(string.Empty);
         }
 
         public void WriteWelcome(string playerNumber)

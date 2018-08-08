@@ -51,7 +51,7 @@
             if (WinCondition())
                 WriteWinner(player);
 
-            WriteEmpty();
+            new Writer(_writer).WriteEmpty();
         }
 
         private void WriteWinner(string player)

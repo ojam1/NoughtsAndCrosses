@@ -17,7 +17,7 @@ namespace NoughtsAndCrosses
 
         private void DisplayGrid()
         {
-            new Writer(_writer).WriteGrid(_grid.PositionA, _grid.PositionB, _grid.PositionC, _grid.PositionD, _grid.PositionE, _grid.PositionF, _grid.PositionG, _grid.PositionH, _grid.PositionI);
+            new Writer(_writer).WriteGrid(_grid.GridLocations["a"], _grid.GridLocations["b"], _grid.GridLocations["c"], _grid.GridLocations["d"], _grid.GridLocations["e"], _grid.GridLocations["f"], _grid.GridLocations["g"], _grid.GridLocations["h"], _grid.GridLocations["i"]);
         }
 
         public void Start()

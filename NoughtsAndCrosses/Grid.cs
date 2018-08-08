@@ -21,8 +21,9 @@
                                     PositionA == PositionE && PositionE == PositionI ||
                                     PositionG == PositionE && PositionE == PositionC;
 
-        public Grid()
+        public Grid(Game game)
         {
+            Game = game;
             PositionA = "a";
             PositionB = "b";
             PositionC = "c";

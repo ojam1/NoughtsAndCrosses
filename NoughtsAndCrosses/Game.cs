@@ -10,7 +10,7 @@
         public Game(IWriter writer)
         {
             _writer = writer;
-            _grid = new Grid();
+            _grid = new Grid(this);
         }
 
         private void DisplayGrid()
@@ -32,6 +32,7 @@
             {
                 writer.WriteTurn(PlayerOne);
                 _grid.SetNoughtOrCross(writer.ReadLine(), PlayerOne);
+                DisplayGrid();
                 if (_grid.WinCondition)
                 {
                     WriteWinner(PlayerOne);
@@ -39,6 +40,7 @@
                 }
                 writer.WriteTurn(PlayerTwo);
                 _grid.SetNoughtOrCross(writer.ReadLine(), PlayerTwo);
+                DisplayGrid();
                 if (_grid.WinCondition)
                 {
                     WriteWinner(PlayerTwo);

@@ -1,16 +1,18 @@
-﻿namespace NoughtsAndCrosses
+﻿using System.Reflection.Metadata.Ecma335;
+
+namespace NoughtsAndCrosses
 {
     public class Game
     {
         private readonly IWriter _writer;
-        public string PlayerOne { get; private set; }
-        public string PlayerTwo { get; private set; }
+        public Player PlayerOne;
+        public Player PlayerTwo;
         private readonly Grid _grid;
 
         public Game(IWriter writer)
         {
             _writer = writer;
-            _grid = new Grid(this);
+            _grid = new Grid();
         }
 
         private void DisplayGrid()
@@ -22,28 +24,28 @@
         {
             var writer = new Writer(_writer);
             writer.WriteWelcome("one");
-            PlayerOne = writer.ReadLine();
-            writer.WritePlayerName(PlayerOne);
+            PlayerOne = new Player(writer.ReadLine(), "X");
+            writer.WritePlayerName(PlayerOne.Name);
             writer.WriteWelcome("two");
-            PlayerTwo = writer.ReadLine();
-            writer.WritePlayerName(PlayerTwo);
+            PlayerTwo = new Player(writer.ReadLine(), "O");
+            writer.WritePlayerName(PlayerTwo.Name);
             DisplayGrid();
             while (!_grid.WinCondition)
             {
-                writer.WriteTurn(PlayerOne);
+                writer.WriteTurn(PlayerOne.Name);
                 _grid.SetNoughtOrCross(writer.ReadLine(), PlayerOne);
                 DisplayGrid();
                 if (_grid.WinCondition)
                 {
-                    WriteWinner(PlayerOne);
+                    WriteWinner(PlayerOne.Name);
                     break;
                 }
-                writer.WriteTurn(PlayerTwo);
+                writer.WriteTurn(PlayerTwo.Name);
                 _grid.SetNoughtOrCross(writer.ReadLine(), PlayerTwo);
                 DisplayGrid();
                 if (_grid.WinCondition)
                 {
-                    WriteWinner(PlayerTwo);
+                    WriteWinner(PlayerTwo.Name);
                     break;
                 }
             }

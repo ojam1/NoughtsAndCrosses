@@ -2,7 +2,6 @@
 {
     public class Grid
     {
-        public static Game Game;
         public string PositionA { get; private set; }
         public string PositionB { get; private set; }
         public string PositionC { get; private set; }
@@ -21,9 +20,8 @@
                                     PositionA == PositionE && PositionE == PositionI ||
                                     PositionG == PositionE && PositionE == PositionC;
 
-        public Grid(Game game)
+        public Grid()
         {
-            Game = game;
             PositionA = "a";
             PositionB = "b";
             PositionC = "c";
@@ -35,43 +33,38 @@
             PositionI = "i";
         }
 
-        public void SetNoughtOrCross(string go, string player)
+        public void SetNoughtOrCross(string go, Player player)
         {
             switch (go.ToLower())
             {
                 case "a":
-                    PositionA = CheckPlayer(player);
+                    PositionA = player.NoughtCross;
                     break;
                 case "b":
-                    PositionB = CheckPlayer(player);
+                    PositionB = player.NoughtCross;
                     break;
                 case "c":
-                    PositionC = CheckPlayer(player);
+                    PositionC = player.NoughtCross;
                     break;
                 case "d":
-                    PositionD = CheckPlayer(player);
+                    PositionD = player.NoughtCross;
                     break;
                 case "e":
-                    PositionE = CheckPlayer(player);
+                    PositionE = player.NoughtCross;
                     break;
                 case "f":
-                    PositionF = CheckPlayer(player);
+                    PositionF = player.NoughtCross;
                     break;
                 case "g":
-                    PositionG = CheckPlayer(player);
+                    PositionG = player.NoughtCross;
                     break;
                 case "h":
-                    PositionH = CheckPlayer(player);
+                    PositionH = player.NoughtCross;
                     break;
                 case "i":
-                    PositionI = CheckPlayer(player);
+                    PositionI = player.NoughtCross;
                     break;
             }
-        }
-
-        private static string CheckPlayer(string player)
-        {
-            return player == Game.PlayerOne ? "X" : "O";
         }
     }
 }

@@ -41,7 +41,8 @@
 
         public void WriteGrid(string a, string b, string c, string d, string e, string f, string g, string h, string i)
         {
-            _writer.WriteLine($"+---+---+---+\n| {a} | {b} | {c} |\n+---+---+---+\n| {d} | {e} | {f} |\n+---+---+---+\n| {g} | {h} | {i} |\n+---+---+---+");
+            _writer.WriteLine(
+                $"+---+---+---+\n| {a} | {b} | {c} |\n+---+---+---+\n| {d} | {e} | {f} |\n+---+---+---+\n| {g} | {h} | {i} |\n+---+---+---+");
         }
     }
 }

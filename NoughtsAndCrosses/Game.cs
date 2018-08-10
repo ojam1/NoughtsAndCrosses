@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
-namespace NoughtsAndCrosses
+﻿namespace NoughtsAndCrosses
 {
     public class Game
     {
@@ -8,6 +6,8 @@ namespace NoughtsAndCrosses
         public Player PlayerOne;
         public Player PlayerTwo;
         private readonly Grid _grid;
+        private bool _isPlayerOneTurn;
+        private Player _winner;
 
         public Game(IWriter writer)
         {
@@ -30,25 +30,39 @@ namespace NoughtsAndCrosses
             PlayerTwo = new Player(writer.ReadLine(), "O");
             writer.WritePlayerName(PlayerTwo.Name);
             DisplayGrid();
+            _isPlayerOneTurn = true;
             while (!_grid.WinCondition)
             {
-                writer.WriteTurn(PlayerOne.Name);
-                _grid.SetNoughtOrCross(writer.ReadLine(), PlayerOne);
-                DisplayGrid();
-                if (_grid.WinCondition)
-                {
-                    WriteWinner(PlayerOne.Name);
-                    break;
-                }
-                writer.WriteTurn(PlayerTwo.Name);
-                _grid.SetNoughtOrCross(writer.ReadLine(), PlayerTwo);
-                DisplayGrid();
-                if (_grid.WinCondition)
-                {
-                    WriteWinner(PlayerTwo.Name);
-                    break;
-                }
+                AttemptPlayerTurn(writer, _isPlayerOneTurn ? PlayerOne : PlayerTwo);
+
+                if (!_grid.WinCondition) continue;
+                WriteWinner(_winner.Name);
+                break;
             }
+        }
+
+        private void AttemptPlayerTurn(Writer writer, Player player)
+        {
+            writer.WriteTurn(player.Name);
+            try
+            {
+                _grid.SetNoughtOrCross(writer.ReadLine(), player);
+                if (_grid.WinCondition)
+                    _winner = player;
+
+                ChangeCurrentPlayer();
+            }
+            catch (Grid.IncorrectGridPostionException e)
+            {
+                writer.WriteLine(e.Message);
+            }
+
+            DisplayGrid();
+        }
+
+        private void ChangeCurrentPlayer()
+        {
+            _isPlayerOneTurn = !_isPlayerOneTurn;
         }
 
         private void WriteWinner(string player)

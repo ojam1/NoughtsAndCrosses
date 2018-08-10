@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace NoughtsAndCrosses
 {
@@ -32,7 +34,22 @@ namespace NoughtsAndCrosses
 
         public void SetNoughtOrCross(string go, Player player)
         {
+            if (!GridLocations.ContainsKey(go.ToLower()))
+                throw new IncorrectGridPostionException("Not a valid location");
+
+            if (GridLocations[go.ToLower()] == "X" || GridLocations[go.ToLower()] == "O")
+                throw new IncorrectGridPostionException("Postion already taken");
+
             GridLocations[go.ToLower()] = player.NoughtCross;
+        }
+
+
+
+        internal class IncorrectGridPostionException : Exception
+        {
+            public IncorrectGridPostionException(string message) : base(message)
+            {
+            }
         }
     }
 }

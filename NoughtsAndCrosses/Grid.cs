@@ -7,23 +7,30 @@ namespace NoughtsAndCrosses
 {
     public class Grid
     {
-        public Dictionary<string, string> GridLocations;
-        public bool WinCondition => GridLocations["a"] == GridLocations["b"] && GridLocations["b"] == GridLocations["c"] ||
-                                    GridLocations["d"] == GridLocations["e"] && GridLocations["e"] == GridLocations["f"] ||
-                                    GridLocations["g"] == GridLocations["h"] && GridLocations["h"] == GridLocations["i"] ||
-                                    GridLocations["a"] == GridLocations["d"] && GridLocations["d"] == GridLocations["g"] ||
-                                    GridLocations["b"] == GridLocations["e"] && GridLocations["e"] == GridLocations["h"] ||
-                                    GridLocations["c"] == GridLocations["f"] && GridLocations["f"] == GridLocations["i"] ||
-                                    GridLocations["a"] == GridLocations["e"] && GridLocations["e"] == GridLocations["i"] ||
-                                    GridLocations["g"] == GridLocations["e"] && GridLocations["e"] == GridLocations["c"];
-        public bool IsFull => GridLocations["a"] != "a" && GridLocations["b"] != "b" && GridLocations["c"] != "c"
-                              && GridLocations["d"] != "d" && GridLocations["e"] != "e" && GridLocations["f"] != "f"
-                              && GridLocations["g"] != "g" && GridLocations["h"] != "h" && GridLocations["i"] != "i"
+        private readonly Dictionary<string, string> _gridLocations;
+        public bool WinCondition => _gridLocations["a"] == _gridLocations["b"] && _gridLocations["b"] == _gridLocations["c"] ||
+                                    _gridLocations["d"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["f"] ||
+                                    _gridLocations["g"] == _gridLocations["h"] && _gridLocations["h"] == _gridLocations["i"] ||
+                                    _gridLocations["a"] == _gridLocations["d"] && _gridLocations["d"] == _gridLocations["g"] ||
+                                    _gridLocations["b"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["h"] ||
+                                    _gridLocations["c"] == _gridLocations["f"] && _gridLocations["f"] == _gridLocations["i"] ||
+                                    _gridLocations["a"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["i"] ||
+                                    _gridLocations["g"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["c"];
+        public bool IsFull => _gridLocations["a"] != "a" && _gridLocations["b"] != "b" && _gridLocations["c"] != "c"
+                              && _gridLocations["d"] != "d" && _gridLocations["e"] != "e" && _gridLocations["f"] != "f"
+                              && _gridLocations["g"] != "g" && _gridLocations["h"] != "h" && _gridLocations["i"] != "i"
                               && !WinCondition;
+
+        public string[,] GridLocations => new[,]
+        {
+            { _gridLocations["a"], _gridLocations["b"], _gridLocations["c"] },
+            { _gridLocations["d"], _gridLocations["e"], _gridLocations["f"] },
+            { _gridLocations["g"], _gridLocations["h"], _gridLocations["i"] }
+        };
 
         public Grid()
         {
-            GridLocations = new Dictionary<string, string>
+            _gridLocations = new Dictionary<string, string>
             {
                 { "a", "a" },
                 { "b", "b" },
@@ -39,13 +46,13 @@ namespace NoughtsAndCrosses
 
         public void SetNoughtOrCross(string go, Player player)
         {
-            if (!GridLocations.ContainsKey(go.ToLower()))
+            if (!_gridLocations.ContainsKey(go.ToLower()))
                 throw new IncorrectGridPostionException("Not a valid location");
 
-            if (GridLocations[go.ToLower()] == "X" || GridLocations[go.ToLower()] == "O")
+            if (_gridLocations[go.ToLower()] == "X" || _gridLocations[go.ToLower()] == "O")
                 throw new IncorrectGridPostionException("Postion already taken");
 
-            GridLocations[go.ToLower()] = player.NoughtCross;
+            _gridLocations[go.ToLower()] = player.NoughtCross;
         }
 
         internal class IncorrectGridPostionException : Exception

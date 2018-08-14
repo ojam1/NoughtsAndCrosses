@@ -19,7 +19,7 @@ namespace NoughtsAndCrosses.Tests
         {
             _grid.SetNoughtOrCross("a", PlayerOne);
 
-            Assert.That(_grid.GridLocations["a"], Is.EqualTo("X"));
+            Assert.That(_grid.GridLocations[0, 0], Is.EqualTo("X"));
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace NoughtsAndCrosses.Tests
         {
             _grid.SetNoughtOrCross("b", PlayerTwo);
 
-            Assert.That(_grid.GridLocations["b"], Is.EqualTo("O"));
+            Assert.That(_grid.GridLocations[0, 1], Is.EqualTo("O"));
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace NoughtsAndCrosses.Tests
         {
             _grid.SetNoughtOrCross("c", PlayerOne);
 
-            Assert.That(_grid.GridLocations["c"], Is.EqualTo("X"));
+            Assert.That(_grid.GridLocations[0, 2], Is.EqualTo("X"));
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace NoughtsAndCrosses.Tests
         {
             _grid.SetNoughtOrCross("d", PlayerOne);
 
-            Assert.That(_grid.GridLocations["d"], Is.EqualTo("X"));
+            Assert.That(_grid.GridLocations[1, 0], Is.EqualTo("X"));
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace NoughtsAndCrosses.Tests
         {
             _grid.SetNoughtOrCross("e", PlayerOne);
 
-            Assert.That(_grid.GridLocations["e"], Is.EqualTo("X"));
+            Assert.That(_grid.GridLocations[1, 1], Is.EqualTo("X"));
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace NoughtsAndCrosses.Tests
         {
             _grid.SetNoughtOrCross("f", PlayerOne);
 
-            Assert.That(_grid.GridLocations["f"], Is.EqualTo("X"));
+            Assert.That(_grid.GridLocations[1, 2], Is.EqualTo("X"));
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace NoughtsAndCrosses.Tests
         {
             _grid.SetNoughtOrCross("g", PlayerOne);
 
-            Assert.That(_grid.GridLocations["g"], Is.EqualTo("X"));
+            Assert.That(_grid.GridLocations[2, 0], Is.EqualTo("X"));
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace NoughtsAndCrosses.Tests
         {
             _grid.SetNoughtOrCross("h", PlayerOne);
 
-            Assert.That(_grid.GridLocations["h"], Is.EqualTo("X"));
+            Assert.That(_grid.GridLocations[2, 1], Is.EqualTo("X"));
         }
 
         [Test]
@@ -83,7 +83,7 @@ namespace NoughtsAndCrosses.Tests
         {
             _grid.SetNoughtOrCross("i", PlayerOne);
 
-            Assert.That(_grid.GridLocations["i"], Is.EqualTo("X"));
+            Assert.That(_grid.GridLocations[2, 2], Is.EqualTo("X"));
         }
 
         [Test]

@@ -85,5 +85,21 @@ namespace NoughtsAndCrosses.Tests
 
             Assert.That(_grid.GridLocations["i"], Is.EqualTo("X"));
         }
+
+        [Test]
+        public void Should_set_is_full_without_a_win()
+        {
+            _grid.SetNoughtOrCross("a", PlayerOne);
+            _grid.SetNoughtOrCross("b", PlayerTwo);
+            _grid.SetNoughtOrCross("c", PlayerOne);
+            _grid.SetNoughtOrCross("d", PlayerTwo);
+            _grid.SetNoughtOrCross("e", PlayerOne);
+            _grid.SetNoughtOrCross("f", PlayerOne);
+            _grid.SetNoughtOrCross("g", PlayerTwo);
+            _grid.SetNoughtOrCross("h", PlayerOne);
+            _grid.SetNoughtOrCross("i", PlayerTwo);
+
+            Assert.That(_grid.IsFull ,Is.EqualTo(true));
+        }
     }
 }

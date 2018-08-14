@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
 namespace NoughtsAndCrosses
@@ -15,6 +16,10 @@ namespace NoughtsAndCrosses
                                     GridLocations["c"] == GridLocations["f"] && GridLocations["f"] == GridLocations["i"] ||
                                     GridLocations["a"] == GridLocations["e"] && GridLocations["e"] == GridLocations["i"] ||
                                     GridLocations["g"] == GridLocations["e"] && GridLocations["e"] == GridLocations["c"];
+        public bool IsFull => GridLocations["a"] != "a" && GridLocations["b"] != "b" && GridLocations["c"] != "c"
+                              && GridLocations["d"] != "d" && GridLocations["e"] != "e" && GridLocations["f"] != "f"
+                              && GridLocations["g"] != "g" && GridLocations["h"] != "h" && GridLocations["i"] != "i"
+                              && !WinCondition;
 
         public Grid()
         {
@@ -42,8 +47,6 @@ namespace NoughtsAndCrosses
 
             GridLocations[go.ToLower()] = player.NoughtCross;
         }
-
-
 
         internal class IncorrectGridPostionException : Exception
         {

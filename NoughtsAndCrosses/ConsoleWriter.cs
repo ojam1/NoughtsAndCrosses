@@ -13,10 +13,5 @@ namespace NoughtsAndCrosses
         {
             return Console.ReadLine();
         }
-
-        public void Write(string line)
-        {
-            Console.Write(line);
-        }
     }
 }

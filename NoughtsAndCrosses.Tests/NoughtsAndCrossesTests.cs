@@ -91,5 +91,40 @@ namespace NoughtsAndCrosses.Tests
             writer.Received().WriteLine("+---+---+---+\n| X | X | X |\n+---+---+---+\n| O | O | f |\n+---+---+---+\n| g | h | i |\n+---+---+---+");
             writer.Received().WriteLine("Winner Matt!");
         }
+
+        [Test]
+        public void Game_with_no_winners()
+        {
+            var writer = Substitute.For<IWriter>();
+            writer.ReadLine().Returns("Matt", "Olly", "a", "b", "c", "d", "e", "g", "f", "i", "h");
+
+            new Game(writer).Start();
+
+            writer.Received(24).WriteLine(Arg.Any<string>());
+            writer.Received().WriteLine("Enter player one name");
+            writer.Received().WriteLine("Hello Matt");
+            writer.Received().WriteLine("Enter player two name");
+            writer.Received().WriteLine("Hello Olly");
+            writer.Received().WriteLine("+---+---+---+\n| a | b | c |\n+---+---+---+\n| d | e | f |\n+---+---+---+\n| g | h | i |\n+---+---+---+");
+            writer.Received().WriteLine("Matt, please enter your move");
+            writer.Received().WriteLine("+---+---+---+\n| X | b | c |\n+---+---+---+\n| d | e | f |\n+---+---+---+\n| g | h | i |\n+---+---+---+");
+            writer.Received().WriteLine("Olly, please enter your move");
+            writer.Received().WriteLine("+---+---+---+\n| X | O | c |\n+---+---+---+\n| d | e | f |\n+---+---+---+\n| g | h | i |\n+---+---+---+");
+            writer.Received().WriteLine("Matt, please enter your move");
+            writer.Received().WriteLine("+---+---+---+\n| X | O | X |\n+---+---+---+\n| d | e | f |\n+---+---+---+\n| g | h | i |\n+---+---+---+");
+            writer.Received().WriteLine("Olly, please enter your move");
+            writer.Received().WriteLine("+---+---+---+\n| X | O | X |\n+---+---+---+\n| O | e | f |\n+---+---+---+\n| g | h | i |\n+---+---+---+");
+            writer.Received().WriteLine("Matt, please enter your move");
+            writer.Received().WriteLine("+---+---+---+\n| X | O | X |\n+---+---+---+\n| O | X | f |\n+---+---+---+\n| g | h | i |\n+---+---+---+");
+            writer.Received().WriteLine("Olly, please enter your move");
+            writer.Received().WriteLine("+---+---+---+\n| X | O | X |\n+---+---+---+\n| O | X | f |\n+---+---+---+\n| O | h | i |\n+---+---+---+");
+            writer.Received().WriteLine("Matt, please enter your move");
+            writer.Received().WriteLine("+---+---+---+\n| X | O | X |\n+---+---+---+\n| O | X | X |\n+---+---+---+\n| O | h | i |\n+---+---+---+");
+            writer.Received().WriteLine("Olly, please enter your move");
+            writer.Received().WriteLine("+---+---+---+\n| X | O | X |\n+---+---+---+\n| O | X | X |\n+---+---+---+\n| O | h | O |\n+---+---+---+");
+            writer.Received().WriteLine("Matt, please enter your move");
+            writer.Received().WriteLine("+---+---+---+\n| X | O | X |\n+---+---+---+\n| O | X | X |\n+---+---+---+\n| O | X | O |\n+---+---+---+");
+            writer.Received().WriteLine("No Winner");
+        }
     }
 }

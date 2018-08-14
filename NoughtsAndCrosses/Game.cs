@@ -35,8 +35,14 @@
             {
                 AttemptPlayerTurn(writer, _isPlayerOneTurn ? PlayerOne : PlayerTwo);
 
-                if (!_grid.WinCondition) continue;
-                WriteWinner(_winner.Name);
+                if (_grid.WinCondition)
+                {
+                    WriteWinner(_winner.Name);
+                    break;
+                }
+
+                if (!_grid.IsFull) continue;
+                WriteNoWinner();
                 break;
             }
         }
@@ -68,6 +74,11 @@
         private void WriteWinner(string player)
         {
             new Writer(_writer).WriteLine($"Winner {player}!");
+        }
+
+        private void WriteNoWinner()
+        {
+            new Writer(_writer).WriteLine("No Winner");
         }
     }
 }

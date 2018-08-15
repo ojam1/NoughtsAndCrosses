@@ -6,7 +6,7 @@ namespace NoughtsAndCrosses.Tests
     public class NoughtsAndCrossesTests
     {
         [Test]
-        public void Outputs_quick_game()
+        public void Player_one_wins()
         {
             var writer = Substitute.For<IWriter>();
             writer.ReadLine().Returns("Matt", "Olly", "a", "d", "b", "e", "c");

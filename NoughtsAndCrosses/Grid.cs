@@ -42,15 +42,25 @@ namespace NoughtsAndCrosses
             };
         }
 
-        public void SetNoughtOrCross(string go, Player player)
+        public void SetNoughtOrCross(string playerTurn, Player player)
         {
-            if (!_gridLocations.ContainsKey(go.ToLower()))
+            if (!IsPlayerTurnValid(playerTurn))
                 throw new IncorrectGridPostionException("Not a valid location");
 
-            if (_gridLocations[go.ToLower()] == "X" || _gridLocations[go.ToLower()] == "O")
+            if (IsIntendedPlayerTurnAlreadyTaken(playerTurn))
                 throw new IncorrectGridPostionException("Postion already taken");
 
-            _gridLocations[go.ToLower()] = player.NoughtCross;
+            _gridLocations[playerTurn.ToLower()] = player.NoughtCross;
+        }
+
+        private bool IsIntendedPlayerTurnAlreadyTaken(string playerTurn)
+        {
+            return _gridLocations[playerTurn.ToLower()] == "X" || _gridLocations[playerTurn.ToLower()] == "O";
+        }
+
+        private bool IsPlayerTurnValid(string playerTurn)
+        {
+            return _gridLocations.ContainsKey(playerTurn.ToLower());
         }
 
         internal class IncorrectGridPostionException : Exception

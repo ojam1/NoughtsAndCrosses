@@ -17,10 +17,11 @@
 
         private void DisplayGrid()
         {
-            new Writer(_writer).WriteGrid(_grid.GridLocations[0, 0], _grid.GridLocations[0, 1], _grid.GridLocations[0, 2],
-                                          _grid.GridLocations[1, 0], _grid.GridLocations[1, 1], _grid.GridLocations[1, 2],
-                                          _grid.GridLocations[2, 0], _grid.GridLocations[2, 1], _grid.GridLocations[2, 2]
-                );
+            new Writer(_writer).WriteGrid(
+                _grid.GridLocations[0, 0], _grid.GridLocations[0, 1], _grid.GridLocations[0, 2],
+                _grid.GridLocations[1, 0], _grid.GridLocations[1, 1], _grid.GridLocations[1, 2],
+                _grid.GridLocations[2, 0], _grid.GridLocations[2, 1], _grid.GridLocations[2, 2]
+            );
         }
 
         public void Start()

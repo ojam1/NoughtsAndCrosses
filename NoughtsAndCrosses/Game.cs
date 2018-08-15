@@ -9,6 +9,7 @@
         private bool _isPlayerOneTurn;
         private Player _winner;
 
+
         public Game(IWriter writer)
         {
             _writer = writer;
@@ -27,12 +28,8 @@
         public void Start()
         {
             var writer = new Writer(_writer);
-            writer.WriteWelcome("one");
-            PlayerOne = new Player(writer.ReadLine(), "X");
-            writer.WritePlayerName(PlayerOne.Name);
-            writer.WriteWelcome("two");
-            PlayerTwo = new Player(writer.ReadLine(), "O");
-            writer.WritePlayerName(PlayerTwo.Name);
+            PlayerOne = PlayerInitialisation(writer, "one", "X");
+            PlayerTwo = PlayerInitialisation(writer, "two", "O");
             DisplayGrid();
             _isPlayerOneTurn = true;
             while (!_grid.WinCondition)
@@ -49,6 +46,14 @@
                 WriteNoWinner();
                 break;
             }
+        }
+
+        private static Player PlayerInitialisation(Writer writer, string playerNumber, string playerSymbol)
+        {
+            writer.WriteWelcome(playerNumber);
+            var playerName = writer.ReadLine();
+            writer.WritePlayerName(playerName);
+            return new Player(playerName, playerSymbol);
         }
 
         private void AttemptPlayerTurn(Writer writer, Player player)

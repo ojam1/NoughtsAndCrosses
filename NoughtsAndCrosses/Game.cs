@@ -2,12 +2,12 @@
 {
     public class Game
     {
-        private readonly IWriter _writer;
+        private static IWriter _writer;
         public Player PlayerOne;
         public Player PlayerTwo;
         private readonly Grid _grid;
         private bool _isPlayerOneTurn;
-        private Player _winner;
+        private string _winner;
 
 
         public Game(IWriter writer)
@@ -18,27 +18,25 @@
 
         private void DisplayGrid()
         {
-            new Writer(_writer).WriteGrid(
-                _grid.GridLocations[0, 0], _grid.GridLocations[0, 1], _grid.GridLocations[0, 2],
-                _grid.GridLocations[1, 0], _grid.GridLocations[1, 1], _grid.GridLocations[1, 2],
-                _grid.GridLocations[2, 0], _grid.GridLocations[2, 1], _grid.GridLocations[2, 2]
-            );
+            _writer.WriteLine($"+---+---+---+\n| {_grid.GridLocations[0, 0]} | {_grid.GridLocations[0, 1]} | {_grid.GridLocations[0, 2]} " +
+                              $"|\n+---+---+---+\n| {_grid.GridLocations[1, 0]} | {_grid.GridLocations[1, 1]} | {_grid.GridLocations[1, 2]} " +
+                              $"|\n+---+---+---+\n| {_grid.GridLocations[2, 0]} | {_grid.GridLocations[2, 1]} | {_grid.GridLocations[2, 2]} " +
+                              "|\n+---+---+---+");
         }
 
         public void Start()
         {
-            var writer = new Writer(_writer);
-            PlayerOne = PlayerInitialisation(writer, "one", "X");
-            PlayerTwo = PlayerInitialisation(writer, "two", "O");
+            PlayerOne = PlayerInitialisation("one", "X");
+            PlayerTwo = PlayerInitialisation("two", "O");
             DisplayGrid();
             _isPlayerOneTurn = true;
             while (!_grid.WinCondition)
             {
-                AttemptPlayerTurn(writer, _isPlayerOneTurn ? PlayerOne : PlayerTwo);
+                AttemptPlayerTurn(_isPlayerOneTurn ? PlayerOne : PlayerTwo);
 
                 if (_grid.WinCondition)
                 {
-                    WriteWinner(_winner.Name);
+                    WriteWinner(_winner);
                     break;
                 }
 
@@ -48,28 +46,28 @@
             }
         }
 
-        private static Player PlayerInitialisation(Writer writer, string playerNumber, string playerSymbol)
+        private static Player PlayerInitialisation(string playerNumber, string playerSymbol)
         {
-            writer.WriteWelcome(playerNumber);
-            var playerName = writer.ReadLine();
-            writer.WritePlayerName(playerName);
+            WriteWelcome(playerNumber);
+            var playerName = _writer.ReadLine();
+            WritePlayerName(playerName);
             return new Player(playerName, playerSymbol);
         }
 
-        private void AttemptPlayerTurn(Writer writer, Player player)
+        private void AttemptPlayerTurn(Player player)
         {
-            writer.WriteTurn(player.Name);
+            WriteTurn(player.Name);
             try
             {
-                _grid.SetNoughtOrCross(writer.ReadLine(), player);
+                _grid.SetNoughtOrCross(_writer.ReadLine(), player);
                 if (_grid.WinCondition)
-                    _winner = player;
+                    _winner = player.Name;
 
                 ChangeCurrentPlayer();
             }
             catch (Grid.IncorrectGridPostionException e)
             {
-                writer.WriteLine(e.Message);
+                _writer.WriteLine(e.Message);
             }
 
             DisplayGrid();
@@ -80,14 +78,29 @@
             _isPlayerOneTurn = !_isPlayerOneTurn;
         }
 
-        private void WriteWinner(string player)
+        private static void WriteWinner(string player)
         {
-            new Writer(_writer).WriteLine($"Winner {player}!");
+            _writer.WriteLine($"Winner {player}!");
         }
 
-        private void WriteNoWinner()
+        private static void WriteNoWinner()
         {
-            new Writer(_writer).WriteLine("No Winner");
+            _writer.WriteLine("No Winner");
+        }
+
+        private static void WriteWelcome(string playerNumber)
+        {
+            _writer.WriteLine($"Enter player {playerNumber} name");
+        }
+
+        private static void WriteTurn(string player)
+        {
+            _writer.WriteLine($"{player}, please enter your move");
+        }
+
+        private static void WritePlayerName(string name)
+        {
+            _writer.WriteLine($"Hello {name}");
         }
     }
 }

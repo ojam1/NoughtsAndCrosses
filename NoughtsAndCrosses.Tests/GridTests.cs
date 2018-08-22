@@ -87,7 +87,7 @@ namespace NoughtsAndCrosses.Tests
         }
 
         [Test]
-        public void Should_set_is_full_without_a_win()
+        public void Should_set_is_full_without_a_win_condition()
         {
             _grid.SetNoughtOrCross("a", PlayerOne);
             _grid.SetNoughtOrCross("b", PlayerTwo);

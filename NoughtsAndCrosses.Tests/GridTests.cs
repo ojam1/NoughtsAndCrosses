@@ -101,5 +101,40 @@ namespace NoughtsAndCrosses.Tests
 
             Assert.That(_grid.IsFull ,Is.EqualTo(true));
         }
+
+        [TestCase("a", "b", "c")]
+        [TestCase("d", "e", "f")]
+        [TestCase("g", "h", "i")]
+        public void Should_be_win_condition_on_all_rows(string firstRowPosition, string secondRowPosition, string thirdRowPosition)
+        {
+            _grid.SetNoughtOrCross(firstRowPosition, PlayerOne);
+            _grid.SetNoughtOrCross(secondRowPosition, PlayerOne);
+            _grid.SetNoughtOrCross(thirdRowPosition, PlayerOne);
+
+            Assert.That(_grid.WinCondition, Is.EqualTo(true));
+        }
+
+        [TestCase("a", "d", "g")]
+        [TestCase("b", "e", "h")]
+        [TestCase("c", "f", "i")]
+        public void Should_be_win_condition_on_all_columns(string firstColumnPosition, string secondColumnPosition, string thirdColumnPosition)
+        {
+            _grid.SetNoughtOrCross(firstColumnPosition, PlayerOne);
+            _grid.SetNoughtOrCross(secondColumnPosition, PlayerOne);
+            _grid.SetNoughtOrCross(thirdColumnPosition, PlayerOne);
+
+            Assert.That(_grid.WinCondition, Is.EqualTo(true));
+        }
+
+        [TestCase("a", "e", "i")]
+        [TestCase("g", "e", "c")]
+        public void Should_be_win_condition_on_all_diagonals(string firstDiagonalPosition, string secondDiagonalPosition, string thirdDiagonalPosition)
+        {
+            _grid.SetNoughtOrCross(firstDiagonalPosition, PlayerOne);
+            _grid.SetNoughtOrCross(secondDiagonalPosition, PlayerOne);
+            _grid.SetNoughtOrCross(thirdDiagonalPosition, PlayerOne);
+
+            Assert.That(_grid.WinCondition, Is.EqualTo(true));
+        }
     }
 }

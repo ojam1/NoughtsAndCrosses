@@ -14,6 +14,7 @@ namespace NoughtsAndCrosses
                                     _gridLocations["c"] == _gridLocations["f"] && _gridLocations["f"] == _gridLocations["i"] ||
                                     _gridLocations["a"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["i"] ||
                                     _gridLocations["g"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["c"];
+
         public bool IsFull => _gridLocations["a"] != "a" && _gridLocations["b"] != "b" && _gridLocations["c"] != "c"
                               && _gridLocations["d"] != "d" && _gridLocations["e"] != "e" && _gridLocations["f"] != "f"
                               && _gridLocations["g"] != "g" && _gridLocations["h"] != "h" && _gridLocations["i"] != "i"

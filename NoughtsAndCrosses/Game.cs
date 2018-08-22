@@ -16,14 +16,6 @@
             _grid = new Grid();
         }
 
-        private void DisplayGrid()
-        {
-            _writer.WriteLine($"+---+---+---+\n| {_grid.GridLocations[0, 0]} | {_grid.GridLocations[0, 1]} | {_grid.GridLocations[0, 2]} " +
-                              $"|\n+---+---+---+\n| {_grid.GridLocations[1, 0]} | {_grid.GridLocations[1, 1]} | {_grid.GridLocations[1, 2]} " +
-                              $"|\n+---+---+---+\n| {_grid.GridLocations[2, 0]} | {_grid.GridLocations[2, 1]} | {_grid.GridLocations[2, 2]} " +
-                              "|\n+---+---+---+");
-        }
-
         public void Start()
         {
             PlayerOne = PlayerInitialisation("one", "X");
@@ -78,6 +70,29 @@
             _isPlayerOneTurn = !_isPlayerOneTurn;
         }
 
+        private void DisplayGrid()
+        {
+            _writer.WriteLine($"+---+---+---+\n| {_grid.GridLocations[0, 0]} | {_grid.GridLocations[0, 1]} | {_grid.GridLocations[0, 2]} " +
+                              $"|\n+---+---+---+\n| {_grid.GridLocations[1, 0]} | {_grid.GridLocations[1, 1]} | {_grid.GridLocations[1, 2]} " +
+                              $"|\n+---+---+---+\n| {_grid.GridLocations[2, 0]} | {_grid.GridLocations[2, 1]} | {_grid.GridLocations[2, 2]} " +
+                              "|\n+---+---+---+");
+        }
+
+        private static void WriteWelcome(string playerNumber)
+        {
+            _writer.WriteLine($"Enter player {playerNumber} name");
+        }
+
+        private static void WritePlayerName(string name)
+        {
+            _writer.WriteLine($"Hello {name}");
+        }
+
+        private static void WriteTurn(string player)
+        {
+            _writer.WriteLine($"{player}, please enter your move");
+        }
+
         private static void WriteWinner(string player)
         {
             _writer.WriteLine($"Winner {player}!");
@@ -86,21 +101,6 @@
         private static void WriteNoWinner()
         {
             _writer.WriteLine("No Winner");
-        }
-
-        private static void WriteWelcome(string playerNumber)
-        {
-            _writer.WriteLine($"Enter player {playerNumber} name");
-        }
-
-        private static void WriteTurn(string player)
-        {
-            _writer.WriteLine($"{player}, please enter your move");
-        }
-
-        private static void WritePlayerName(string name)
-        {
-            _writer.WriteLine($"Hello {name}");
         }
     }
 }

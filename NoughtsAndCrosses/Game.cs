@@ -13,14 +13,14 @@
         public Game(IWriter writer)
         {
             _writer = writer;
-            _grid = new Grid();
+            _grid = new Grid(_writer);
         }
 
         public void Start()
         {
             PlayerOne = PlayerInitialisation("one", "X");
             PlayerTwo = PlayerInitialisation("two", "O");
-            DisplayGrid();
+            _grid.DisplayGrid();
             _isPlayerOneTurn = true;
             while (!_grid.WinCondition)
             {
@@ -62,20 +62,12 @@
                 _writer.WriteLine(e.Message);
             }
 
-            DisplayGrid();
+            _grid.DisplayGrid();
         }
 
         private void ChangeCurrentPlayer()
         {
             _isPlayerOneTurn = !_isPlayerOneTurn;
-        }
-
-        private void DisplayGrid()
-        {
-            _writer.WriteLine($"+---+---+---+\n| {_grid.GridLocations[0, 0]} | {_grid.GridLocations[0, 1]} | {_grid.GridLocations[0, 2]} " +
-                              $"|\n+---+---+---+\n| {_grid.GridLocations[1, 0]} | {_grid.GridLocations[1, 1]} | {_grid.GridLocations[1, 2]} " +
-                              $"|\n+---+---+---+\n| {_grid.GridLocations[2, 0]} | {_grid.GridLocations[2, 1]} | {_grid.GridLocations[2, 2]} " +
-                              "|\n+---+---+---+");
         }
 
         private static void WriteWelcome(string playerNumber)

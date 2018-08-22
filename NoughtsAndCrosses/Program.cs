@@ -2,7 +2,7 @@
 {
     public class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             var game = new Game(new ConsoleWriter());
             game.Start();

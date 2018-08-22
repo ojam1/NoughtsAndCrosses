@@ -51,7 +51,7 @@
             WriteTurn(player.Name);
             try
             {
-                _grid.SetNoughtOrCross(_writer.ReadLine(), player);
+                _grid.SetNoughtOrCross(_writer.ReadLine(), player.NoughtCross);
                 if (_grid.WinCondition)
                     _winner = player.Name;
 

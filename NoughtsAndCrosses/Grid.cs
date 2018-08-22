@@ -43,7 +43,7 @@ namespace NoughtsAndCrosses
             };
         }
 
-        public void SetNoughtOrCross(string playerTurn, Player player)
+        public void SetNoughtOrCross(string playerTurn, string noughtOrCross)
         {
             if (!IsPlayerTurnValid(playerTurn))
                 throw new IncorrectGridPostionException("Not a valid location");
@@ -51,7 +51,7 @@ namespace NoughtsAndCrosses
             if (IsIntendedPlayerTurnAlreadyTaken(playerTurn))
                 throw new IncorrectGridPostionException("Postion already taken");
 
-            _gridLocations[playerTurn.ToLower()] = player.NoughtCross;
+            _gridLocations[playerTurn.ToLower()] = noughtOrCross;
         }
 
         private bool IsIntendedPlayerTurnAlreadyTaken(string playerTurn)

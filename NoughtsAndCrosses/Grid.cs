@@ -6,6 +6,7 @@ namespace NoughtsAndCrosses
     public class Grid
     {
         private readonly Dictionary<string, string> _gridLocations;
+        private readonly IWriter _writer;
         public bool WinCondition => _gridLocations["a"] == _gridLocations["b"] && _gridLocations["b"] == _gridLocations["c"] ||
                                     _gridLocations["d"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["f"] ||
                                     _gridLocations["g"] == _gridLocations["h"] && _gridLocations["h"] == _gridLocations["i"] ||
@@ -27,8 +28,9 @@ namespace NoughtsAndCrosses
             { _gridLocations["g"], _gridLocations["h"], _gridLocations["i"] }
         };
 
-        public Grid()
+        public Grid(IWriter writer)
         {
+            _writer = writer;
             _gridLocations = new Dictionary<string, string>
             {
                 { "a", "a" },
@@ -52,6 +54,14 @@ namespace NoughtsAndCrosses
                 throw new IncorrectGridPostionException("Postion already taken");
 
             _gridLocations[playerTurn.ToLower()] = noughtOrCross;
+        }
+
+        public void DisplayGrid()
+        {
+            _writer.WriteLine($"+---+---+---+\n| {_gridLocations["a"]} | {_gridLocations["b"]} | {_gridLocations["c"]} " +
+                              $"|\n+---+---+---+\n| {_gridLocations["d"]} | {_gridLocations["e"]} | {_gridLocations["f"]} " +
+                              $"|\n+---+---+---+\n| {_gridLocations["g"]} | {_gridLocations["h"]} | {_gridLocations["i"]} " +
+                              "|\n+---+---+---+");
         }
 
         private bool IsIntendedPlayerTurnAlreadyTaken(string playerTurn)

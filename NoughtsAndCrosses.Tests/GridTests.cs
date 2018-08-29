@@ -5,12 +5,12 @@ namespace NoughtsAndCrosses.Tests
     class GridTests
     {
         private Grid _grid;
-        private readonly IWriter _writer;
+        private readonly IWriter _iWriter;
 
         [SetUp]
         public void SetUp()
         {
-            _grid = new Grid(_writer);
+            _grid = new Grid(_iWriter);
         }
 
         [Test]

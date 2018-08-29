@@ -6,7 +6,7 @@ namespace NoughtsAndCrosses
     public class Grid
     {
         private readonly Dictionary<string, string> _gridLocations;
-        private readonly IWriter _writer;
+        private readonly IWriter _iWriter;
         public bool WinCondition => _gridLocations["a"] == _gridLocations["b"] && _gridLocations["b"] == _gridLocations["c"] ||
                                     _gridLocations["d"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["f"] ||
                                     _gridLocations["g"] == _gridLocations["h"] && _gridLocations["h"] == _gridLocations["i"] ||
@@ -28,9 +28,9 @@ namespace NoughtsAndCrosses
             { _gridLocations["g"], _gridLocations["h"], _gridLocations["i"] }
         };
 
-        public Grid(IWriter writer)
+        public Grid(IWriter iWriter)
         {
-            _writer = writer;
+            _iWriter = iWriter;
             _gridLocations = new Dictionary<string, string>
             {
                 { "a", "a" },
@@ -58,7 +58,7 @@ namespace NoughtsAndCrosses
 
         public void DisplayGrid()
         {
-            _writer.WriteLine($"+---+---+---+\n| {_gridLocations["a"]} | {_gridLocations["b"]} | {_gridLocations["c"]} " +
+            _iWriter.WriteLine($"+---+---+---+\n| {_gridLocations["a"]} | {_gridLocations["b"]} | {_gridLocations["c"]} " +
                               $"|\n+---+---+---+\n| {_gridLocations["d"]} | {_gridLocations["e"]} | {_gridLocations["f"]} " +
                               $"|\n+---+---+---+\n| {_gridLocations["g"]} | {_gridLocations["h"]} | {_gridLocations["i"]} " +
                               "|\n+---+---+---+");

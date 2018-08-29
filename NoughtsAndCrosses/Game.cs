@@ -2,7 +2,7 @@
 {
     public class Game
     {
-        private static IWriter _writer;
+        private static IWriter _iWriter;
         public Player PlayerOne;
         public Player PlayerTwo;
         private readonly Grid _grid;
@@ -10,10 +10,10 @@
         private string _winner;
 
 
-        public Game(IWriter writer)
+        public Game(IWriter iWriter)
         {
-            _writer = writer;
-            _grid = new Grid(_writer);
+            _iWriter = iWriter;
+            _grid = new Grid(_iWriter);
         }
 
         public void Start()
@@ -41,7 +41,7 @@
         private static Player PlayerInitialisation(string playerNumber, string playerSymbol)
         {
             WriteWelcome(playerNumber);
-            var playerName = _writer.ReadLine();
+            var playerName = _iWriter.ReadLine();
             WritePlayerName(playerName);
             return new Player(playerName, playerSymbol);
         }
@@ -51,7 +51,7 @@
             WriteTurn(player.Name);
             try
             {
-                _grid.SetNoughtOrCross(_writer.ReadLine(), player.NoughtCross);
+                _grid.SetNoughtOrCross(_iWriter.ReadLine(), player.NoughtCross);
                 if (_grid.WinCondition)
                     _winner = player.Name;
 
@@ -59,7 +59,7 @@
             }
             catch (Grid.IncorrectGridPostionException e)
             {
-                _writer.WriteLine(e.Message);
+                _iWriter.WriteLine(e.Message);
             }
 
             _grid.DisplayGrid();
@@ -72,27 +72,27 @@
 
         private static void WriteWelcome(string playerNumber)
         {
-            _writer.WriteLine($"Enter player {playerNumber} name");
+            _iWriter.WriteLine($"Enter player {playerNumber} name");
         }
 
         private static void WritePlayerName(string name)
         {
-            _writer.WriteLine($"Hello {name}");
+            _iWriter.WriteLine($"Hello {name}");
         }
 
         private static void WriteTurn(string player)
         {
-            _writer.WriteLine($"{player}, please enter your move");
+            _iWriter.WriteLine($"{player}, please enter your move");
         }
 
         private static void WriteWinner(string player)
         {
-            _writer.WriteLine($"Winner {player}!");
+            _iWriter.WriteLine($"Winner {player}!");
         }
 
         private static void WriteNoWinner()
         {
-            _writer.WriteLine("No Winner");
+            _iWriter.WriteLine("No Winner");
         }
     }
 }

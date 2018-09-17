@@ -6,15 +6,10 @@ namespace NoughtsAndCrosses
     public class Grid
     {
         private readonly Dictionary<string, string> _gridLocations;
+
+        public bool WinCondition => HorizontalWin() || VerticalWin() || DiagonalWin();
+
         private readonly IWriter _iWriter;
-        public bool WinCondition => _gridLocations["a"] == _gridLocations["b"] && _gridLocations["b"] == _gridLocations["c"] ||
-                                    _gridLocations["d"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["f"] ||
-                                    _gridLocations["g"] == _gridLocations["h"] && _gridLocations["h"] == _gridLocations["i"] ||
-                                    _gridLocations["a"] == _gridLocations["d"] && _gridLocations["d"] == _gridLocations["g"] ||
-                                    _gridLocations["b"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["h"] ||
-                                    _gridLocations["c"] == _gridLocations["f"] && _gridLocations["f"] == _gridLocations["i"] ||
-                                    _gridLocations["a"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["i"] ||
-                                    _gridLocations["g"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["c"];
 
         public bool IsFull => _gridLocations["a"] != "a" && _gridLocations["b"] != "b" && _gridLocations["c"] != "c"
                               && _gridLocations["d"] != "d" && _gridLocations["e"] != "e" && _gridLocations["f"] != "f"
@@ -62,6 +57,26 @@ namespace NoughtsAndCrosses
                               $"|\n+---+---+---+\n| {_gridLocations["d"]} | {_gridLocations["e"]} | {_gridLocations["f"]} " +
                               $"|\n+---+---+---+\n| {_gridLocations["g"]} | {_gridLocations["h"]} | {_gridLocations["i"]} " +
                               "|\n+---+---+---+");
+        }
+
+        private bool HorizontalWin()
+        {
+            return _gridLocations["a"] == _gridLocations["b"] && _gridLocations["b"] == _gridLocations["c"] ||
+                   _gridLocations["d"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["f"] ||
+                   _gridLocations["g"] == _gridLocations["h"] && _gridLocations["h"] == _gridLocations["i"];
+        }
+
+        private bool VerticalWin()
+        {
+            return _gridLocations["a"] == _gridLocations["d"] && _gridLocations["d"] == _gridLocations["g"] ||
+                   _gridLocations["b"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["h"] ||
+                   _gridLocations["c"] == _gridLocations["f"] && _gridLocations["f"] == _gridLocations["i"];
+        }
+
+        private bool DiagonalWin()
+        {
+            return _gridLocations["a"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["i"] ||
+                   _gridLocations["g"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["c"];
         }
 
         private bool IsIntendedPlayerTurnAlreadyTaken(string playerTurn)

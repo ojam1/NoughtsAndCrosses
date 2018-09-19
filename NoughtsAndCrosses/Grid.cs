@@ -63,22 +63,22 @@ namespace NoughtsAndCrosses
 
         private bool HorizontalWin()
         {
-            return GridLocationsArray[0,0] == GridLocationsArray[0,1] && GridLocationsArray[0,1] == GridLocationsArray[0,2] ||
-                   GridLocationsArray[1,0] == GridLocationsArray[1,1] && GridLocationsArray[1,1] == GridLocationsArray[1,2] ||
-                   GridLocationsArray[2,0] == GridLocationsArray[2,1] && GridLocationsArray[2,1] == GridLocationsArray[2,2];
+            return IsNeighbourSame(0, 1, 0 ,-1) && IsNeighbourSame(0, 1, 0, 1) ||
+                   IsNeighbourSame(1, 1, 0, -1) && IsNeighbourSame(1, 1, 0, 1) ||
+                   IsNeighbourSame(2, 1, 0, -1) && IsNeighbourSame(2, 1, 0, 1);
         }
 
         private bool VerticalWin()
         {
-            return GridLocationsArray[0,0] == GridLocationsArray[1,0] && GridLocationsArray[1,0] == GridLocationsArray[2,0] ||
-                   GridLocationsArray[0,1] == GridLocationsArray[1,1] && GridLocationsArray[1,1] == GridLocationsArray[2,1] ||
-                   GridLocationsArray[0,2] == GridLocationsArray[1,2] && GridLocationsArray[1,2] == GridLocationsArray[2,2];
+            return IsNeighbourSame(1, 0, -1, 0) && IsNeighbourSame(1, 0, 1, 0) ||
+                   IsNeighbourSame(1, 1, -1, 0) && IsNeighbourSame(1, 1, 1, 0) ||
+                   IsNeighbourSame(1, 2, -1, 0) && IsNeighbourSame(1, 2, 1, 0);
         }
 
         private bool DiagonalWin()
         {
-            return GridLocationsArray[0,0] == GridLocationsArray[1,1] && GridLocationsArray[1,1] == GridLocationsArray[2,2] ||
-                   GridLocationsArray[2,0] == GridLocationsArray[1,1] && GridLocationsArray[1,1] == GridLocationsArray[0,2];
+            return IsNeighbourSame(1, 1, -1, -1) && IsNeighbourSame(1, 1, 1, 1) ||
+                   IsNeighbourSame(1, 1, 1, -1) && IsNeighbourSame(1, 1, -1, 1);
         }
 
         private bool IsIntendedPlayerTurnAlreadyTaken(string playerTurn)
@@ -91,16 +91,16 @@ namespace NoughtsAndCrosses
             return _gridLocations.ContainsKey(playerTurn);
         }
 
-        public bool IsNeighbourSame(int row, int column, int offsetx, int offsety)
+        private bool IsNeighbourSame(int row, int column, int offSetX, int offSetY)
         {
-            var rowtocheck = row + offsetx;
-            var columntocheck = column + offsety;
+            var rowToCheck = row + offSetX;
+            var columnToCheck = column + offSetY;
 
-            var outOfBounds = rowtocheck < 0 || rowtocheck >= _gridSize || columntocheck < 0 || columntocheck >= _gridSize;
+            var outOfBounds = rowToCheck < 0 || rowToCheck >= _gridSize || columnToCheck < 0 || columnToCheck >= _gridSize;
 
             if (!outOfBounds)
             {
-                return GridLocationsArray[row, column] == GridLocationsArray[rowtocheck, columntocheck];
+                return GridLocationsArray[row, column] == GridLocationsArray[rowToCheck, columnToCheck];
             }
 
             return false;

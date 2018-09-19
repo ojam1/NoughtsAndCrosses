@@ -1,43 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NoughtsAndCrosses
 {
     public class Grid
     {
         private readonly Dictionary<string, string> _gridLocations;
-
         public bool WinCondition => HorizontalWin() || VerticalWin() || DiagonalWin();
-
         private readonly IWriter _iWriter;
-
-        public bool IsFull => _gridLocations["a"] != "a" && _gridLocations["b"] != "b" && _gridLocations["c"] != "c"
-                              && _gridLocations["d"] != "d" && _gridLocations["e"] != "e" && _gridLocations["f"] != "f"
-                              && _gridLocations["g"] != "g" && _gridLocations["h"] != "h" && _gridLocations["i"] != "i"
-                              && !WinCondition;
-
-        public string[,] GridLocations => new[,]
+        public string[,] GridLocationsArray { get; }
+        private readonly int _gridSize;
+        public bool IsFull
         {
-            { _gridLocations["a"], _gridLocations["b"], _gridLocations["c"] },
-            { _gridLocations["d"], _gridLocations["e"], _gridLocations["f"] },
-            { _gridLocations["g"], _gridLocations["h"], _gridLocations["i"] }
-        };
+            get
+            {
+                var countOfLocationsSet = GridLocationsArray.Cast<string>().Count(value => value == "X" || value == "O");
 
-        public Grid(IWriter iWriter)
+                return countOfLocationsSet == _gridSize * _gridSize && !WinCondition;
+            }
+        }
+
+        public Grid(IWriter iWriter, int gridSize)
         {
             _iWriter = iWriter;
-            _gridLocations = new Dictionary<string, string>
+            _gridSize = gridSize;
+            _gridLocations = new Dictionary<string, string>();
+
+            GridLocationsArray = new string[_gridSize, _gridSize];
+
+            var gridNumbers = 1;
+
+            for (var row = 0; row < _gridSize; row++)
             {
-                { "a", "a" },
-                { "b", "b" },
-                { "c", "c" },
-                { "d", "d" },
-                { "e", "e" },
-                { "f", "f" },
-                { "g", "g" },
-                { "h", "h" },
-                { "i", "i" }
-            };
+                for (var column = 0; column < _gridSize; column++)
+                {
+                    GridLocationsArray[row, column] = gridNumbers.ToString();
+                    _gridLocations.Add(gridNumbers.ToString(), $"{row},{column}");
+                    gridNumbers++;
+                }
+            }
         }
 
         public void SetNoughtOrCross(string playerTurn, string noughtOrCross)
@@ -48,45 +50,45 @@ namespace NoughtsAndCrosses
             if (IsIntendedPlayerTurnAlreadyTaken(playerTurn))
                 throw new IncorrectGridPostionException("Postion already taken");
 
-            _gridLocations[playerTurn.ToLower()] = noughtOrCross;
+            GridLocationsArray[int.Parse(_gridLocations[playerTurn].Split(',')[0]), int.Parse(_gridLocations[playerTurn].Split(',')[1])] = noughtOrCross;
         }
 
         public void DisplayGrid()
         {
-            _iWriter.WriteLine($"+---+---+---+\n| {_gridLocations["a"]} | {_gridLocations["b"]} | {_gridLocations["c"]} " +
-                              $"|\n+---+---+---+\n| {_gridLocations["d"]} | {_gridLocations["e"]} | {_gridLocations["f"]} " +
-                              $"|\n+---+---+---+\n| {_gridLocations["g"]} | {_gridLocations["h"]} | {_gridLocations["i"]} " +
+            _iWriter.WriteLine($"+---+---+---+\n| {GridLocationsArray[0,0]} | {GridLocationsArray[0,1]} | {GridLocationsArray[0,2]} " +
+                              $"|\n+---+---+---+\n| {GridLocationsArray[1,0]} | {GridLocationsArray[1,1]} | {GridLocationsArray[1,2]} " +
+                              $"|\n+---+---+---+\n| {GridLocationsArray[2,0]} | {GridLocationsArray[2,1]} | {GridLocationsArray[2,2]} " +
                               "|\n+---+---+---+");
         }
 
         private bool HorizontalWin()
         {
-            return _gridLocations["a"] == _gridLocations["b"] && _gridLocations["b"] == _gridLocations["c"] ||
-                   _gridLocations["d"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["f"] ||
-                   _gridLocations["g"] == _gridLocations["h"] && _gridLocations["h"] == _gridLocations["i"];
+            return GridLocationsArray[0,0] == GridLocationsArray[0,1] && GridLocationsArray[0,1] == GridLocationsArray[0,2] ||
+                   GridLocationsArray[1,0] == GridLocationsArray[1,1] && GridLocationsArray[1,1] == GridLocationsArray[1,2] ||
+                   GridLocationsArray[2,0] == GridLocationsArray[2,1] && GridLocationsArray[2,1] == GridLocationsArray[2,2];
         }
 
         private bool VerticalWin()
         {
-            return _gridLocations["a"] == _gridLocations["d"] && _gridLocations["d"] == _gridLocations["g"] ||
-                   _gridLocations["b"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["h"] ||
-                   _gridLocations["c"] == _gridLocations["f"] && _gridLocations["f"] == _gridLocations["i"];
+            return GridLocationsArray[0,0] == GridLocationsArray[1,0] && GridLocationsArray[1,0] == GridLocationsArray[2,0] ||
+                   GridLocationsArray[0,1] == GridLocationsArray[1,1] && GridLocationsArray[1,1] == GridLocationsArray[2,1] ||
+                   GridLocationsArray[0,2] == GridLocationsArray[1,2] && GridLocationsArray[1,2] == GridLocationsArray[2,2];
         }
 
         private bool DiagonalWin()
         {
-            return _gridLocations["a"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["i"] ||
-                   _gridLocations["g"] == _gridLocations["e"] && _gridLocations["e"] == _gridLocations["c"];
+            return GridLocationsArray[0,0] == GridLocationsArray[1,1] && GridLocationsArray[1,1] == GridLocationsArray[2,2] ||
+                   GridLocationsArray[2,0] == GridLocationsArray[1,1] && GridLocationsArray[1,1] == GridLocationsArray[0,2];
         }
 
         private bool IsIntendedPlayerTurnAlreadyTaken(string playerTurn)
         {
-            return _gridLocations[playerTurn.ToLower()] == "X" || _gridLocations[playerTurn.ToLower()] == "O";
+            return GridLocationsArray[int.Parse(_gridLocations[playerTurn].Split(',')[0]), int.Parse(_gridLocations[playerTurn].Split(',')[1])] == "X" || GridLocationsArray[int.Parse(_gridLocations[playerTurn].Split(',')[0]), int.Parse(_gridLocations[playerTurn].Split(',')[1])] == "O";
         }
 
         private bool IsPlayerTurnValid(string playerTurn)
         {
-            return _gridLocations.ContainsKey(playerTurn.ToLower());
+            return _gridLocations.ContainsKey(playerTurn);
         }
 
         internal class IncorrectGridPostionException : Exception

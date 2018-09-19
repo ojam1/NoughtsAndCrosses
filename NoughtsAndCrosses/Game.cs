@@ -13,7 +13,7 @@
         public Game(IWriter iWriter)
         {
             _iWriter = iWriter;
-            _grid = new Grid(_iWriter);
+            _grid = new Grid(_iWriter, 3);
         }
 
         public void Start()

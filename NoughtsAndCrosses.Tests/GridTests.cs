@@ -10,100 +10,100 @@ namespace NoughtsAndCrosses.Tests
         [SetUp]
         public void SetUp()
         {
-            _grid = new Grid(_iWriter);
+            _grid = new Grid(_iWriter, 3);
         }
 
         [Test]
-        public void Should_set_grid_postion_A()
+        public void Should_set_grid_postion_1()
         {
-            _grid.SetNoughtOrCross("a", "X");
+            _grid.SetNoughtOrCross("1", "X");
 
-            Assert.That(_grid.GridLocations[0, 0], Is.EqualTo("X"));
+            Assert.That(_grid.GridLocationsArray[0, 0], Is.EqualTo("X"));
         }
 
         [Test]
-        public void Should_set_grid_postion_B()
+        public void Should_set_grid_postion_2()
         {
-            _grid.SetNoughtOrCross("b", "O");
+            _grid.SetNoughtOrCross("2", "O");
 
-            Assert.That(_grid.GridLocations[0, 1], Is.EqualTo("O"));
+            Assert.That(_grid.GridLocationsArray[0, 1], Is.EqualTo("O"));
         }
 
         [Test]
-        public void Should_set_grid_postion_C()
+        public void Should_set_grid_postion_3()
         {
-            _grid.SetNoughtOrCross("c", "X");
+            _grid.SetNoughtOrCross("3", "X");
 
-            Assert.That(_grid.GridLocations[0, 2], Is.EqualTo("X"));
+            Assert.That(_grid.GridLocationsArray[0, 2], Is.EqualTo("X"));
         }
 
         [Test]
-        public void Should_set_grid_postion_D()
+        public void Should_set_grid_postion_4()
         {
-            _grid.SetNoughtOrCross("d", "X");
+            _grid.SetNoughtOrCross("4", "X");
 
-            Assert.That(_grid.GridLocations[1, 0], Is.EqualTo("X"));
+            Assert.That(_grid.GridLocationsArray[1, 0], Is.EqualTo("X"));
         }
 
         [Test]
-        public void Should_set_grid_postion_E()
+        public void Should_set_grid_postion_5()
         {
-            _grid.SetNoughtOrCross("e", "X");
+            _grid.SetNoughtOrCross("5", "X");
 
-            Assert.That(_grid.GridLocations[1, 1], Is.EqualTo("X"));
+            Assert.That(_grid.GridLocationsArray[1, 1], Is.EqualTo("X"));
         }
 
         [Test]
-        public void Should_set_grid_postion_F()
+        public void Should_set_grid_postion_6()
         {
-            _grid.SetNoughtOrCross("f", "X");
+            _grid.SetNoughtOrCross("6", "X");
 
-            Assert.That(_grid.GridLocations[1, 2], Is.EqualTo("X"));
+            Assert.That(_grid.GridLocationsArray[1, 2], Is.EqualTo("X"));
         }
 
         [Test]
-        public void Should_set_grid_postion_G()
+        public void Should_set_grid_postion_7()
         {
-            _grid.SetNoughtOrCross("g", "X");
+            _grid.SetNoughtOrCross("7", "X");
 
-            Assert.That(_grid.GridLocations[2, 0], Is.EqualTo("X"));
+            Assert.That(_grid.GridLocationsArray[2, 0], Is.EqualTo("X"));
         }
 
         [Test]
-        public void Should_set_grid_postion_H()
+        public void Should_set_grid_postion_8()
         {
-            _grid.SetNoughtOrCross("h", "X");
+            _grid.SetNoughtOrCross("8", "X");
 
-            Assert.That(_grid.GridLocations[2, 1], Is.EqualTo("X"));
+            Assert.That(_grid.GridLocationsArray[2, 1], Is.EqualTo("X"));
         }
 
         [Test]
-        public void Should_set_grid_postion_I()
+        public void Should_set_grid_postion_9()
         {
-            _grid.SetNoughtOrCross("i", "X");
+            _grid.SetNoughtOrCross("9", "X");
 
-            Assert.That(_grid.GridLocations[2, 2], Is.EqualTo("X"));
+            Assert.That(_grid.GridLocationsArray[2, 2], Is.EqualTo("X"));
         }
 
         [Test]
         public void Should_set_is_full_without_a_win_condition()
         {
-            _grid.SetNoughtOrCross("a", "X");
-            _grid.SetNoughtOrCross("b", "O");
-            _grid.SetNoughtOrCross("c", "X");
-            _grid.SetNoughtOrCross("d", "O");
-            _grid.SetNoughtOrCross("e", "X");
-            _grid.SetNoughtOrCross("f", "X");
-            _grid.SetNoughtOrCross("g", "O");
-            _grid.SetNoughtOrCross("h", "X");
-            _grid.SetNoughtOrCross("i", "O");
+            _grid.SetNoughtOrCross("1", "X");
+            _grid.SetNoughtOrCross("2", "O");
+            _grid.SetNoughtOrCross("3", "X");
+            _grid.SetNoughtOrCross("4", "O");
+            _grid.SetNoughtOrCross("5", "X");
+            _grid.SetNoughtOrCross("6", "X");
+            _grid.SetNoughtOrCross("7", "O");   
+            _grid.SetNoughtOrCross("8", "X");
+            _grid.SetNoughtOrCross("9", "O");
 
             Assert.That(_grid.IsFull ,Is.EqualTo(true));
         }
 
-        [TestCase("a", "b", "c")]
-        [TestCase("d", "e", "f")]
-        [TestCase("g", "h", "i")]
+        [TestCase("1", "2", "3")]
+        [TestCase("4", "5", "6")]
+        [TestCase("7", "8", "9")]
         public void Should_be_win_condition_on_all_rows(string firstRowPosition, string secondRowPosition, string thirdRowPosition)
         {
             _grid.SetNoughtOrCross(firstRowPosition, "X");
@@ -113,9 +113,9 @@ namespace NoughtsAndCrosses.Tests
             Assert.That(_grid.WinCondition, Is.EqualTo(true));
         }
 
-        [TestCase("a", "d", "g")]
-        [TestCase("b", "e", "h")]
-        [TestCase("c", "f", "i")]
+        [TestCase("1", "4", "7")]
+        [TestCase("2", "5", "8")]
+        [TestCase("3", "6", "9")]
         public void Should_be_win_condition_on_all_columns(string firstColumnPosition, string secondColumnPosition, string thirdColumnPosition)
         {
             _grid.SetNoughtOrCross(firstColumnPosition, "X");
@@ -125,8 +125,8 @@ namespace NoughtsAndCrosses.Tests
             Assert.That(_grid.WinCondition, Is.EqualTo(true));
         }
 
-        [TestCase("a", "e", "i")]
-        [TestCase("g", "e", "c")]
+        [TestCase("1", "5", "9")]
+        [TestCase("7", "5", "3")]
         public void Should_be_win_condition_on_all_diagonals(string firstDiagonalPosition, string secondDiagonalPosition, string thirdDiagonalPosition)
         {
             _grid.SetNoughtOrCross(firstDiagonalPosition, "X");

@@ -6,11 +6,8 @@ namespace NoughtsAndCrosses
 {
     public class Grid
     {
-        private readonly Dictionary<string, string> _gridLocations;
-        public bool WinCondition => HorizontalWin() || VerticalWin() || DiagonalWin();
-        private readonly IWriter _iWriter;
         public string[,] GridLocationsArray { get; }
-        private readonly int _gridSize;
+        public bool WinCondition => HorizontalWin() || VerticalWin() || DiagonalWin();
         public bool IsFull
         {
             get
@@ -20,6 +17,9 @@ namespace NoughtsAndCrosses
                 return countOfLocationsSet == _gridSize * _gridSize && !WinCondition;
             }
         }
+        private readonly IWriter _iWriter;
+        private readonly int _gridSize;
+        private readonly Dictionary<string, string> _gridLocations;
 
         public Grid(IWriter iWriter, int gridSize)
         {
@@ -50,7 +50,7 @@ namespace NoughtsAndCrosses
             if (IsIntendedPlayerTurnAlreadyTaken(playerTurn))
                 throw new IncorrectGridPostionException("Postion already taken");
 
-            GridLocationsArray[int.Parse(_gridLocations[playerTurn].Split(',')[0]), int.Parse(_gridLocations[playerTurn].Split(',')[1])] = noughtOrCross;
+            GridLocationsArray[ConvertPlayerTurnToGridLocationRow(playerTurn), ConvertPlayerTurnToGridLocationColumn(playerTurn)] = noughtOrCross;
         }
 
         public void DisplayGrid()
@@ -61,29 +61,79 @@ namespace NoughtsAndCrosses
                               "|\n+---+---+---+");
         }
 
+        private bool IsHorizontalWin(int row, int column)
+        {
+            var matches = new List<bool>();
+
+            for (var i = 1; i < _gridSize; i++)
+            {
+                    matches.Add(IsNeighbourSame(row, column, 0, column + i));
+                    matches.Add(IsNeighbourSame(row, column, 0, column - i));
+            }
+
+            return matches.Count(x => x) >= _gridSize - 1;
+        }
+
         private bool HorizontalWin()
         {
-            return IsNeighbourSame(0, 1, 0 ,-1) && IsNeighbourSame(0, 1, 0, 1) ||
-                   IsNeighbourSame(1, 1, 0, -1) && IsNeighbourSame(1, 1, 0, 1) ||
-                   IsNeighbourSame(2, 1, 0, -1) && IsNeighbourSame(2, 1, 0, 1);
+            for (var row = 0; row < _gridSize; row++)
+            {
+                if (IsHorizontalWin(row, 0))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private bool IsVerticalWin(int row, int column)
+        {
+            var matches = new List<bool>();
+
+            for (var i = 1; i < _gridSize; i++)
+            {
+                matches.Add(IsNeighbourSame(row, column, row + i, 0));
+                matches.Add(IsNeighbourSame(row, column, row - i, 0));
+            }
+
+            return matches.Count(x => x) >= _gridSize - 1;
         }
 
         private bool VerticalWin()
         {
-            return IsNeighbourSame(1, 0, -1, 0) && IsNeighbourSame(1, 0, 1, 0) ||
-                   IsNeighbourSame(1, 1, -1, 0) && IsNeighbourSame(1, 1, 1, 0) ||
-                   IsNeighbourSame(1, 2, -1, 0) && IsNeighbourSame(1, 2, 1, 0);
+            for (var column = 0; column < _gridSize; column++)
+            {
+                if (IsVerticalWin(0, column))
+                    return true;
+            }
+
+            return false;
         }
 
         private bool DiagonalWin()
         {
-            return IsNeighbourSame(1, 1, -1, -1) && IsNeighbourSame(1, 1, 1, 1) ||
-                   IsNeighbourSame(1, 1, 1, -1) && IsNeighbourSame(1, 1, -1, 1);
+            if (_gridSize % 2 == 1)
+            {
+                return IsNeighbourSame(1, 1, -1, -1) && IsNeighbourSame(1, 1, 1, 1) ||
+                       IsNeighbourSame(1, 1, 1, -1) && IsNeighbourSame(1, 1, -1, 1);
+            }
+
+            return false;
+        }
+
+        private int ConvertPlayerTurnToGridLocationRow(string playerTurn)
+        {
+            return int.Parse(_gridLocations[playerTurn].Split(',')[0]);
+        }
+
+        private int ConvertPlayerTurnToGridLocationColumn(string playerTurn)
+        {
+            return int.Parse(_gridLocations[playerTurn].Split(',')[1]);
         }
 
         private bool IsIntendedPlayerTurnAlreadyTaken(string playerTurn)
         {
-            return GridLocationsArray[int.Parse(_gridLocations[playerTurn].Split(',')[0]), int.Parse(_gridLocations[playerTurn].Split(',')[1])] == "X" || GridLocationsArray[int.Parse(_gridLocations[playerTurn].Split(',')[0]), int.Parse(_gridLocations[playerTurn].Split(',')[1])] == "O";
+            return GridLocationsArray[ConvertPlayerTurnToGridLocationRow(playerTurn), ConvertPlayerTurnToGridLocationColumn(playerTurn)] == "X" || 
+                   GridLocationsArray[ConvertPlayerTurnToGridLocationRow(playerTurn), ConvertPlayerTurnToGridLocationColumn(playerTurn)] == "O";
         }
 
         private bool IsPlayerTurnValid(string playerTurn)

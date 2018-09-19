@@ -91,6 +91,21 @@ namespace NoughtsAndCrosses
             return _gridLocations.ContainsKey(playerTurn);
         }
 
+        public bool IsNeighbourSame(int row, int column, int offsetx, int offsety)
+        {
+            var rowtocheck = row + offsetx;
+            var columntocheck = column + offsety;
+
+            var outOfBounds = rowtocheck < 0 || rowtocheck >= _gridSize || columntocheck < 0 || columntocheck >= _gridSize;
+
+            if (!outOfBounds)
+            {
+                return GridLocationsArray[row, column] == GridLocationsArray[rowtocheck, columntocheck];
+            }
+
+            return false;
+        }
+
         internal class IncorrectGridPostionException : Exception
         {
             public IncorrectGridPostionException(string message) : base(message)

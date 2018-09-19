@@ -135,5 +135,15 @@ namespace NoughtsAndCrosses.Tests
 
             Assert.That(_grid.WinCondition, Is.EqualTo(true));
         }
+
+        [TestCase(0, 0)]
+        public void Should_be_aware_of_neighbour_locations(int row, int column)
+        {
+            _grid.SetNoughtOrCross("2", "X");
+            _grid.SetNoughtOrCross("3", "X");
+            var expectation = _grid.IsNeighbourSame(0, 1, 0, 1);
+
+            Assert.That(expectation, Is.EqualTo(true));
+        }
     }
 }

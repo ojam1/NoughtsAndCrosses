@@ -1,10 +1,12 @@
-﻿namespace NoughtsAndCrosses
+﻿using System;
+
+namespace NoughtsAndCrosses
 {
     public class Game
     {
         private static IWriter _iWriter;
-        public Player PlayerOne;
-        public Player PlayerTwo;
+        private Player _playerOne;
+        private Player _playerTwo;
         private readonly Grid _grid;
         private bool _isPlayerOneTurn;
         private string _winner;
@@ -13,18 +15,19 @@
         public Game(IWriter iWriter)
         {
             _iWriter = iWriter;
-            _grid = new Grid(_iWriter, 3);
+            _iWriter.WriteLine("Enter Grid Size");
+            _grid = new Grid(_iWriter, int.Parse(_iWriter.ReadLine()));
         }
 
         public void Start()
         {
-            PlayerOne = PlayerInitialisation("one", "X");
-            PlayerTwo = PlayerInitialisation("two", "O");
+            _playerOne = PlayerInitialisation("one", "X");
+            _playerTwo = PlayerInitialisation("two", "O");
             _grid.DisplayGrid();
             _isPlayerOneTurn = true;
             while (!_grid.WinCondition)
             {
-                AttemptPlayerTurn(_isPlayerOneTurn ? PlayerOne : PlayerTwo);
+                AttemptPlayerTurn(_isPlayerOneTurn ? _playerOne : _playerTwo);
 
                 if (_grid.WinCondition)
                 {

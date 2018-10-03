@@ -55,10 +55,29 @@ namespace NoughtsAndCrosses
 
         public void DisplayGrid()
         {
-            _iWriter.WriteLine($"+---+---+---+\n| {GridLocationsArray[0,0]} | {GridLocationsArray[0,1]} | {GridLocationsArray[0,2]} " +
-                              $"|\n+---+---+---+\n| {GridLocationsArray[1,0]} | {GridLocationsArray[1,1]} | {GridLocationsArray[1,2]} " +
-                              $"|\n+---+---+---+\n| {GridLocationsArray[2,0]} | {GridLocationsArray[2,1]} | {GridLocationsArray[2,2]} " +
-                              "|\n+---+---+---+");
+            for (var row = 0; row < _gridSize; row++)
+            {
+                _iWriter.WriteLine(AddGridRow() + "\n" + AddGridNumbers(row) + "\n" + AddGridRow());
+            }
+        }
+
+        private string AddGridRow()
+        {
+            return new string('-', _gridSize * 6);
+        }
+
+        private string AddGridNumbers(int row)
+        {
+            var fullRow = "";
+
+            for (var column = 0; column < _gridSize; column++)
+            {
+                var result = GridLocationsArray[row, column].Length == 1 ? $" {GridLocationsArray[row, column]}" : GridLocationsArray[row, column];
+
+                fullRow += $"| {result} |";
+            }
+
+            return fullRow;
         }
 
         private bool IsHorizontalWin(int row, int column)
@@ -68,6 +87,7 @@ namespace NoughtsAndCrosses
             for (var i = 1; i < _gridSize; i++)
             {
                     matches.Add(IsNeighbourSame(row, column, 0, column + i));
+
                     matches.Add(IsNeighbourSame(row, column, 0, column - i));
             }
 
@@ -111,13 +131,34 @@ namespace NoughtsAndCrosses
 
         private bool DiagonalWin()
         {
-            if (_gridSize % 2 == 1)
+            return IsDiagonalTopToBottomWin(0, 0) ||
+                   IsDiagonalBottomToTopWin(0, 0);
+        }
+
+        private bool IsDiagonalTopToBottomWin(int row, int column)
+        {
+            var matches = new List<bool>();
+
+            for (var i = 1; i < _gridSize; i++)
             {
-                return IsNeighbourSame(1, 1, -1, -1) && IsNeighbourSame(1, 1, 1, 1) ||
-                       IsNeighbourSame(1, 1, 1, -1) && IsNeighbourSame(1, 1, -1, 1);
+                matches.Add(IsNeighbourSame(0, 0, row - i, column - i));
+                matches.Add(IsNeighbourSame(0, 0, row + i, column + i));
             }
 
-            return false;
+            return matches.Count(x => x) >= _gridSize - 1;
+        }
+
+        private bool IsDiagonalBottomToTopWin(int row, int column)
+        {
+            var matches = new List<bool>();
+
+            for (var i = 1; i < _gridSize; i++)
+            {
+                matches.Add(IsNeighbourSame(0, _gridSize - 1, row - i, column + i));
+                matches.Add(IsNeighbourSame(0, _gridSize - 1, row + i, column - i));
+            }
+
+            return matches.Count(x => x) >= _gridSize - 1;
         }
 
         private int ConvertPlayerTurnToGridLocationRow(string playerTurn)

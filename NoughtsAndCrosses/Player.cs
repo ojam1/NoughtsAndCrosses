@@ -1,6 +1,6 @@
 ﻿namespace NoughtsAndCrosses
 {
-    public class Player
+    internal class Player
     {
         public string Name;
         public string NoughtCross;

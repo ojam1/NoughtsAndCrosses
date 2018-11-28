@@ -9,12 +9,10 @@ namespace NoughtsAndCrosses.Tests
         public void Player_one_wins()
         {
             var writer = Substitute.For<IWriter>();
-            writer.ReadLine().Returns("3", "Matt", "Olly", "1", "4", "2", "5", "3");
+            writer.ReadLine().Returns("3", "", "Matt", "Olly", "1", "4", "2", "5", "3");
 
             new Game(writer).Start();
             
-            writer.Received(29).WriteLine(Arg.Any<string>());
-            writer.Received().WriteLine("Enter Grid Size");
             writer.Received().WriteLine("Enter player one name");
             writer.Received().WriteLine("Hello Matt");
             writer.Received().WriteLine("Enter player two name");
@@ -49,11 +47,10 @@ namespace NoughtsAndCrosses.Tests
         public void Player_two_wins()
         {
             var writer = Substitute.For<IWriter>();
-            writer.ReadLine().Returns("3", "Matt", "Olly", "3", "1", "7", "5", "2","9");
+            writer.ReadLine().Returns("3", "", "Matt", "Olly", "3", "1", "7", "5", "2","9");
 
             new Game(writer).Start();
 
-            writer.Received(33).WriteLine(Arg.Any<string>());
             writer.Received().WriteLine("Enter player one name");
             writer.Received().WriteLine("Hello Matt");
             writer.Received().WriteLine("Enter player two name");
@@ -92,11 +89,10 @@ namespace NoughtsAndCrosses.Tests
         public void Players_input_incorrect_grid_positions()
         {
             var writer = Substitute.For<IWriter>();
-            writer.ReadLine().Returns("3", "Matt", "Olly", "zzzz", "1", "1", "4", "2", "5", "3");
+            writer.ReadLine().Returns("3", "", "Matt", "Olly", "zzzz", "1", "1", "4", "2", "5", "3");
 
             new Game(writer).Start();
 
-            writer.Received(39).WriteLine(Arg.Any<string>());
             writer.Received().WriteLine("Enter player one name");
             writer.Received().WriteLine("Hello Matt");
             writer.Received().WriteLine("Enter player two name");
@@ -135,11 +131,10 @@ namespace NoughtsAndCrosses.Tests
         public void Game_with_no_winners()
         {
             var writer = Substitute.For<IWriter>();
-            writer.ReadLine().Returns("3", "Matt", "Olly", "1", "2", "3", "4", "5", "7", "6", "9", "8");
+            writer.ReadLine().Returns("3", "", "Matt", "Olly", "1", "2", "3", "4", "5", "7", "6", "9", "8");
 
             new Game(writer).Start();
 
-            writer.Received(45).WriteLine(Arg.Any<string>());
             writer.Received().WriteLine("Enter player one name");
             writer.Received().WriteLine("Hello Matt");
             writer.Received().WriteLine("Enter player two name");

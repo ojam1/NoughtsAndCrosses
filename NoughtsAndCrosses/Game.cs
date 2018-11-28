@@ -15,13 +15,24 @@ namespace NoughtsAndCrosses
         public Game(IWriter iWriter)
         {
             _iWriter = iWriter;
+
             _iWriter.WriteLine("Enter Grid Size");
             _grid = new Grid(_iWriter, int.Parse(_iWriter.ReadLine()));
+            _iWriter.WriteLine("Enter 'Computer1' for computer player one if required");
+            if (_iWriter.ReadLine() == "Computer1")
+
+            {
+                _playerOne = new ComputerPlayer("ComputerPlayer1", "X");
+                WritePlayerName(_playerOne.Name);
+            }
+        
         }
 
         public void Start()
         {
-            _playerOne = PlayerInitialisation("one", "X");
+            if (string.IsNullOrWhiteSpace(_playerOne?.Name))
+                    _playerOne = PlayerInitialisation("one", "X");
+
             _playerTwo = PlayerInitialisation("two", "O");
             _grid.DisplayGrid();
             _isPlayerOneTurn = true;

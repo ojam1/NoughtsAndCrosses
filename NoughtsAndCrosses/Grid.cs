@@ -17,6 +17,25 @@ namespace NoughtsAndCrosses
                 return countOfLocationsSet == _gridSize * _gridSize && !WinCondition;
             }
         }
+
+        public List<string> AvailableLocations
+        {
+            get
+            {
+                var list = new List<string>();
+
+                for (var i = 0; i < _gridSize; i++)
+                {
+                    for (var j = 0; j < _gridSize; j++)
+                    {
+                        if (GridLocationsArray[i, j].Equals("X") || GridLocationsArray[i, j].Equals("O"));   
+                            list.Add(GridLocationsArray[i,j]);
+                    }
+                }
+
+                return list;
+            }
+        }
         private readonly IWriter _iWriter;
         private readonly int _gridSize;
         private readonly Dictionary<string, string> _gridLocations;

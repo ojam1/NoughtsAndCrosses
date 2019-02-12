@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace NoughtsAndCrosses
 {
@@ -7,6 +8,7 @@ namespace NoughtsAndCrosses
         private static IWriter _iWriter;
         private Player _playerOne;
         private Player _playerTwo;
+        private ComputerPlayer _computer;
         private readonly Grid _grid;
         private bool _isPlayerOneTurn;
         private string _winner;
@@ -20,9 +22,9 @@ namespace NoughtsAndCrosses
             _grid = new Grid(_iWriter, int.Parse(_iWriter.ReadLine()));
             _iWriter.WriteLine("Enter 'Computer1' for computer player one if required");
             if (_iWriter.ReadLine() == "Computer1")
-
             {
-                _playerOne = new ComputerPlayer("ComputerPlayer1", "X");
+                _computer = new ComputerPlayer("ComputerPlayer1", "X");
+                _playerOne = _computer;
                 WritePlayerName(_playerOne.Name);
             }
         
@@ -63,6 +65,9 @@ namespace NoughtsAndCrosses
         private void AttemptPlayerTurn(Player player)
         {
             WriteTurn(player.Name);
+            if (player.Name == "ComputerPlayer1")
+                player.MakeMove();
+
             try
             {
                 _grid.SetNoughtOrCross(_iWriter.ReadLine(), player.NoughtCross);
